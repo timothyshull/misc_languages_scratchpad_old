@@ -1,0 +1,10 @@
+---
+- hosts: all 
+  tasks:
+    - file: path=/usr/local/lib/libjemalloc.so.2 state=absent force=yes
+      ignore_errors: true
+    - synchronize: src=/pub/data/temp/install/inter/usr/local/lib/libjemalloc.so.2 dest=/usr/local/lib/libjemalloc.so.2
+    # - synchronize: src="{{ localroot }}/cppdeplibs/CentOS{{ ansible_distribution_major_version }}/lib/libjemalloc.so.2" dest=/usr/local/lib/libjemalloc.so.2 
+    - shell: ln -s /usr/local/lib/libjemalloc.so.2 /usr/local/lib/libjemalloc.so
+      ignore_errors: true
+    - shell: ldconfig

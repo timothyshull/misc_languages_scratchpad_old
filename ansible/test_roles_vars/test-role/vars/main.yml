@@ -1,0 +1,2 @@
+---
+test_var: "{{ test_dict['test_key'] if ('test_key' in test_dict and test_dict['test_key'] | length > 0) else 'no key' }}"

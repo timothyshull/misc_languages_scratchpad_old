@@ -1,0 +1,13 @@
+<!-- #docplaster --><!-- #docregion --><html><head></head><body><div *ngif="hero != null">
+    <h2>{{hero.name}} details!</h2>
+    <div>
+        <label>id: </label>{{hero.id}}
+    </div>
+    <div>
+        <label>name: </label>
+        <input [(ngmodel)]="hero.name" placeholder="name">
+    </div>
+    <!-- #docregion back-button -->
+    <button (click)="goBack()">Back</button>
+    <!-- #enddocregion back-button -->
+</div></body></html>

@@ -1,0 +1,25 @@
+---
+- hosts: localhost
+  vars:
+    test1:
+      - one
+      - two
+      - three
+      - four
+    test2:
+      - 1
+      - 2
+      - 3
+      - 4
+  tasks:
+    - debug: var=item
+      with_items: "{{ test1 }}"
+    - debug: var=item
+      with_items:
+        - "{{ test1 }}"
+    - debug: var=item
+      with_items:
+        - ["{{ test1 }}"]
+    - debug: var=item
+      with_items:
+        - "{{ test2 }}"

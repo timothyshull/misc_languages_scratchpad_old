@@ -1,0 +1,45 @@
+---
+- hosts: localhost
+  tasks:
+    - ini_file: 
+        dest: proxy-server.conf
+        section: DEFAULT
+        option: "{{ item['option'] }}"
+        value: "{{ item['value'] }}"
+        backup: yes
+      with_items:
+        - {option: 'workers', value: 1}
+        - {option: 'max_clients', value: 64}
+        - {option: 'user', value: 'swift'}
+        - {option: 'log_name', value: 'proxy-server'}
+        - {option: 'log_facility', value: 'LOG_LOCAL1'}
+        - {option: 'log_level', value: 'INFO'}
+        - {option: 'log_headers', value: False}
+        - {option: 'log_address', value: '/dev/log'}
+    - ini_file:
+        dest: proxy-server.conf
+        section: app:proxy-server
+        option: "{{ item['option'] }}"
+        value: "{{ item['value'] }}"
+        backup: yes
+      with_items:
+        - {option: 'node_timeout', value: 300}
+        - {option: 'recoverable_node_timeout', value: 120}
+        - {option: 'conn_timeout', value: 60}
+        - {option: 'client_timeout', value: 300}
+        - {option: 'client_chunk_size', value: 2097152}
+        - {option: 'object_chunk_size', value: 2097152}
+    - ini_file:
+        dest: proxy-server.conf
+        section: filter:slo
+        option: "{{ item['option'] }}"
+        value: "{{ item['value'] }}"
+        backup: yes
+      with_items:
+        - {option: 'use', value: 'egg:swift#slo'}
+        - {option: 'max_manifest_segments', value: 1000}
+        - {option: 'max_manifest_size', value: 2097152}
+        - {option: 'min_segment_size', value: 1048576}
+        - {option: 'rate_limit_after_segment', value: 10}
+        - {option: 'rate_limit_segments_per_sec', value: 0}
+        - {option: 'max_get_time', value: 86400}

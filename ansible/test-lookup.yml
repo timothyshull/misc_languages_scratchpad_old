@@ -1,0 +1,12 @@
+---
+- hosts: localhost
+  vars:
+    test_node_dir: /usr/local/test
+  tasks:
+    - set_fact: test_build_info="{{ lookup('file', test_node_dir + '/deploy/build_history.yml') | from_yaml }}"
+    - debug: var=test_build_info['build_history'][0]
+    - set_fact: test_software_version_string="{{ test_build_info['build_history'][0]['test-cluster']['version'] }}"
+    - set_fact: test_software_version="{{ test_software_version_string | regex_replace('.*\d+\.\d+\.\d+\.(\d{4}).*', '\\1') | int }}"
+    - debug: var=test_software_version
+    - debug: msg='evaluated =='
+      when: test_software_version | int == 1943

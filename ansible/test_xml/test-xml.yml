@@ -1,0 +1,23 @@
+---
+- hosts: testhost
+  tasks:
+    - copy: src=test1.xml dest=/root/test1.xml
+    - copy: src=test1.xml dest=/root/test1_1.xml
+    - modify_xml:
+        file: /root/test1_1.xml
+        selector: country
+        value_tag: dsjkalfds
+        pretty_print: false
+        value_dict:
+          dafldsa: 1
+          fjdsalfdsa: 2
+          fdasjfkldskaj:
+            - 1
+            - 2
+            - 3
+#        value_tag: jkdsafd
+        action: append
+#    - copy: src=test1.xml dest=/root/test1_2.xml
+#    - modify_xml:
+#    - copy: src=test1.xml dest=/root/test1_3.xml
+#    - modify_xml:

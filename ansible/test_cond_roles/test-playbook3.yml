@@ -1,0 +1,8 @@
+---
+- hosts: testhost
+  tasks:
+    - synchronize: src=test_file1.txt dest=/home/admin/
+
+- hosts: testhost
+  roles:
+    - role3

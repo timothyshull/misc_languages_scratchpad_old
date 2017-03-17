@@ -1,0 +1,11 @@
+---
+- hosts: localhost
+  tasks:
+    - command: python -c "import netaddr"
+      failed_when: False
+      register: pn_out
+    - debug: var=pn_out
+    - command: python -c "import fake_module"
+      failed_when: False
+      register: pf_out
+    - debug: var=pf_out

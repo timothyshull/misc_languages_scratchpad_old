@@ -1,0 +1,13 @@
+---
+- hosts: all
+  vars_prompt:
+    - name: "name"
+      prompt: "what is your name?"
+    - name: "quest"
+      prompt: "what is your quest?"
+    - name: "favcolor"
+      prompt: "what is your favorite color?"
+  roles:
+    - test-role
+#  tasks:
+#    - debug: var=name

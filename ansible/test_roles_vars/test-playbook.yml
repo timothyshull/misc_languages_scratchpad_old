@@ -1,0 +1,11 @@
+---
+- hosts: localhost
+  vars:
+#    test_array: []
+##      - one
+##      - two
+##      - three
+    test_dict:
+      test_key: ['one', 'two', 'three']
+  roles:
+    - role: test-role

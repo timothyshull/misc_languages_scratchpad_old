@@ -1,0 +1,7 @@
+---
+- hosts: localhost
+  tasks:
+    - debug: var=item
+      with_fileglob:
+        - /Users/testuser/Documents/Python/*/*.py
+        - /Users/testuser/Documents/Python/*/*.yml

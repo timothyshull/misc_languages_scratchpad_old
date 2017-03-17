@@ -1,0 +1,17 @@
+<input type="button" (click)="playOrPause()" value="Play/Pause" id="play-pause-button">
+<label for="enable-filter-checkbox">Filter on:</label>
+<input type="checkbox" (change)="toggleFilter()" checked="false" id="enable-filter-checkbox">
+<label for="frequency-range">Frequency:</label>
+<input type="range" (change)="changeFrequency()" min="0" max="1" step="0.01" value="1" id="frequency-range">
+<label for="quality-range">Quality:</label>
+<input type="range" (change)="changeQuality()" min="0" max="1" step="0.01" value="0" id="quality-range">
+
+
+
+<!--<input type="button" value="Play/Pause" id="play-pause-button">-->
+<!--<label for="enable-filter-checkbox">Filter on:</label>-->
+<!--<input type="checkbox" checked="false" id="enable-filter-checkbox">-->
+<!--<label for="frequency-range">Frequency:</label>-->
+<!--<input type="range" min="0" max="1" step="0.01" value="1" id="frequency-range">-->
+<!--<label for="quality-range">Quality:</label>-->
+<!--<input type="range" min="0" max="1" step="0.01" value="0" id="quality-range">-->

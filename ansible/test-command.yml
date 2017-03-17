@@ -1,0 +1,8 @@
+---
+- hosts: localhost 
+  tasks:
+    - fail: msg='You must pass the variable \'command_to_call\' in \'--extra-vars\' i.e. \'getcommand --extra-vars "command_to_call=pwd"\''
+      when: command_to_call is undefined
+    - shell: "{{ command_to_call }}"
+      register: cmd_out
+    - debug: var=cmd_out

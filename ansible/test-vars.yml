@@ -1,0 +1,11 @@
+---
+- hosts: localhost
+  tasks:
+    - add_host:
+        hostname: test.host.com
+        ansible_user: root
+        ansible_password: test
+
+- hosts: test.host.com
+  tasks:
+    - debug: var=hostvars

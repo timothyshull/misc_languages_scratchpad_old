@@ -1,0 +1,5 @@
+---
+- hosts: localhost
+  tasks:
+    - set_fact: cuuid="{{ ('test' | to_uuid)[-6:] }}"
+    - debug: var=cuuid

@@ -1,0 +1,8 @@
+---
+- debug: msg='message 1'
+  when: conditional_var | int == 1
+
+- debug: msg='message 2'
+  when: conditional_var | int == 2
+
+- include: "f{{ conditional_var }}.yml"

@@ -1,0 +1,17 @@
+<!-- #docplaster --><!-- #docregion --><html><head></head><body><h2>My Heroes</h2>
+<ul class="heroes">
+    <li *ngfor="#hero of heroes" [class.selected]="hero === selectedHero" (click)="onSelect(hero)">
+        <span class="badge">{{hero.id}}</span> {{hero.name}}
+    </li>
+</ul>
+<!-- #docregion mini-detail -->
+<div *ngif="selectedHero != null">
+    <h2>
+        <!-- #docregion pipe -->
+        {{selectedHero.name | uppercase}} is my hero
+        <!-- #enddocregion pipe -->
+    </h2>
+    <button (click)="gotoDetail()">View Details</button>
+</div>
+<!-- #enddocregion mini-detail -->
+<!-- #enddocregion --></body></html>

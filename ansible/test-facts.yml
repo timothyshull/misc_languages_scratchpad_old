@@ -1,0 +1,5 @@
+---
+- hosts: test.host.com
+  tasks:
+#    - setup:
+    - debug: var=hostvars

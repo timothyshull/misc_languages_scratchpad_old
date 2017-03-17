@@ -1,0 +1,8 @@
+---
+- hosts: localhost
+  tasks:
+    - setup:
+
+- hosts: localhost
+  roles:
+    - role2

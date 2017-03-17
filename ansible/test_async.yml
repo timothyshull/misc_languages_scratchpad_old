@@ -1,0 +1,27 @@
+---
+- hosts: localhost
+  remote_user: root
+  tasks:
+  - name: simulate long running op (15 sec), wait for up to 45 sec, poll every 5 sec
+    command: /bin/sleep 15
+    async: 45
+    poll: 5
+  - debug: msg='finished first run'
+  - name: simulate long running op, allow to run for 45 sec, fire and forget
+    command: /bin/sleep 15
+    async: 45
+    poll: 0
+  - debug: msg='about to start fire and forget task'
+  - name: 'fire and forget task'
+    shell: test_async.sh
+    async: 1000
+    poll: 0
+    register: shell_sleeper
+  - debug: msg='fired shell task and forgot'
+  - debug: var=shell_sleeper.ansible_job_id
+  - debug: msg='about to check on fired shell task'
+  - name: 'check on fire and forget task'
+    async_status: jid={{ shell_sleeper.ansible_job_id }}
+    register: job_result
+    until: job_result.finished
+    retries: 30

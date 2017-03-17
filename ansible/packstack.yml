@@ -1,0 +1,92 @@
+---
+  - replace:
+      dest: "/usr/lib/python2.{{ ansible_python['version']['minor'] }}/site-packages/packstack/plugins/serverprep_001.py"
+      regexp: "\\(.*Fedora.*,\\s+.*Unknown.*\\)"
+      replace: "('Fedora', 'CentOS', 'Unknown')"
+      backup: yes
+    when: "'Error: mysqladmin' in packstack_result.stdout"
+
+  # uninstall and restart if cinder create iscsi fails
+  - set_fact:
+      major_failure: false
+
+  - set_fact:
+      major_failure: true
+    when: "'Error: cinder type-create iscsi returned 1' in packstack_result.stdout"
+
+  # reinstall corrupted django
+  - shell: pip uninstall django
+    become: true
+    when: "'ImportError: cannot import name RemovedInDjango19Warning' in packstack_result.stdout"
+
+  - shell: pip install django==1.8.14
+    become: true
+    when: "'ImportError: cannot import name RemovedInDjango19Warning' in packstack_result.stdout"
+
+  - shell: pip install django-pyscss==1.0.5
+    become: true
+    when: "'django_pyscss.compressor.DjangoScssFilter: command not found' in packstack_result.stdout"
+
+  - shell: pip install pyscss==1.2.1
+    become: true
+    when: "'django_pyscss.compressor.DjangoScssFilter: command not found' in packstack_result.stdout"
+
+#  - set_fact:
+#      major_failure: true
+#    when: "'Error: Could not start Service' in packstack_result.stdout"
+#  
+#  - yum: name=httpd state=absent
+#    become: true
+#    when: "'Error: Could not start Service[httpd]' in packstack_result.stdout"
+#
+#  - yum: name=httpd state=latest
+#    become: true
+#    when: "'Error: Could not start Service[httpd]' in packstack_result.stdout"
+
+  - shell: sh /tmp/uninstall-openstack.sh
+    when: major_failure == true
+
+  - shell: sleep 2 && shutdown -r now "Ansible updates triggered" 
+    async: 1
+    poll: 0
+    sudo: true
+    ignore_errors: true
+    when: major_failure == true
+
+  - local_action: wait_for host="{{inventory_hostname}}" state=started delay=30 timeout=300
+    when: major_failure == true
+
+  - shell: "yum install -y centos-release-openstack-{{ swift_version }}"
+    become: true
+    when: major_failure == true
+
+  - yum: name=openstack-packstack state=latest
+    become: true
+    when: major_failure == true
+
+  - yum: name=php state=latest    # httpd will err out without php
+    become: true
+#    when: major_failure == true
+
+  - yum: name=httpd state=latest
+    become: true
+
+  - copy: content="LoadModule php5_module modules/libphp5.so" dest=/etc/httpd/conf.d/php5.load
+    become: true
+
+  - shell: gpasswd -a nova libvirt
+    become: true
+#    when: major_failure == true
+
+  - service: name=libvirtd state=restarted
+    become: true
+#    when: major_failure == true
+
+#  - set_fact:
+#      packstack_cmdline: "packstack --allinone --cinder-volumes-create=n --provision-demo=n"
+#    when: "packstack_result.stdout is defined and 'Error: cinder type-create iscsi returned 1' in packstack_result.stdout"
+
+  - shell: "packstack --allinone"
+    become: true
+    register: packstack_result
+    ignore_errors: yes

@@ -1,0 +1,10 @@
+---
+- hosts: localhost
+  vars:
+    test_var:
+      - key_one: one
+        key_two: two
+      - key_three: three
+        key_four: four 
+  tasks:
+    - debug: var=test_var

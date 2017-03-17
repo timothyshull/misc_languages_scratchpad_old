@@ -1,0 +1,10 @@
+<!-- #docregion --><html><head></head><body><h3>Top Heroes</h3>
+<div class="grid grid-pad">
+    <!-- #docregion click -->
+    <div *ngfor="#hero of heroes" (click)="gotoDetail(hero)" class="col-1-4">
+        <!-- #enddocregion click -->
+        <div class="module hero">
+            <h4>{{hero.name}}</h4>
+        </div>
+    </div>
+</div></body></html>

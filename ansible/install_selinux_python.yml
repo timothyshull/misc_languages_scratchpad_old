@@ -1,0 +1,4 @@
+---
+- hosts: cluster:cvms
+  tasks:
+    - yum: name=libselinux-python state=latest

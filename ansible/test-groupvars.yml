@@ -1,0 +1,8 @@
+---
+- hosts: all
+  tasks:
+  - debug: var=groups
+  - debug: var=hostvars
+  - debug: var=group_names
+  - debug: var=environment
+  - debug: var=play_hosts

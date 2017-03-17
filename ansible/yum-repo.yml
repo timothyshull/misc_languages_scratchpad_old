@@ -1,0 +1,14 @@
+---
+- hosts: localhost
+  tasks:
+  - name: Add Some repo
+    yum_repository:
+      name: somerepo
+      description: Some YUM repo
+      baseurl: http://server.com/path/to/the/repo
+      gpgkey: http://server.com/keys/somerepo.pub
+      gpgcheck: yes
+      state: present
+      enabled: yes
+    become: true
+

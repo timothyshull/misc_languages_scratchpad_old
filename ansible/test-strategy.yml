@@ -1,0 +1,8 @@
+---
+- hosts: localhost
+  strategy: "{{ 'debug' if lookup('env', 'DEBUG') | bool == True else 'linear' }}"
+  tasks:
+    - set_fact: test_var="{{ 'debug' if lookup('env', 'DEBUG') | bool == True else 'linear' }}"
+    - debug: var=test_var
+    - fail: msg='failing now'
+      when: True

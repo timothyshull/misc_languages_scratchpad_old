@@ -1,0 +1,13 @@
+---
+- name: collect deploy server facts
+  hosts: localhost
+  tasks:
+    - setup:
+
+- hosts: cluster:cvms
+  vars_prompt:
+    - name: "manual_ssh_pass"
+      prompt: "Please enter the SSH password"
+      private: yes
+  tasks:
+    - local_action: shell /u/tools/bin/sshpass -p "{{ manual_ssh_pass }}" ssh-copy-id -i "{{  hostvars['localhost']['ansible_user_dir'] + '/.ssh/id_rsa.pub' }}" "{{ ansible_user + '@' + inventory_hostname }}"

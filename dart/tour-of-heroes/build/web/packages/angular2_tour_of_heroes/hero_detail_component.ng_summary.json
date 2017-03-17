@@ -1,0 +1,131 @@
+{
+  "ngDeps": {
+    "1": "",
+    "3": [
+      {
+        "1": "dart:html",
+        "5": false
+      },
+      {
+        "1": "package:angular2/angular2.dart",
+        "5": false
+      },
+      {
+        "1": "package:angular2/router.dart",
+        "5": false
+      },
+      {
+        "1": "hero.dart",
+        "5": false
+      },
+      {
+        "1": "hero_service.dart",
+        "5": false
+      }
+    ],
+    "5": [
+      {
+        "1": "HeroDetailComponent",
+        "4": [
+          {
+            "1": "Component",
+            "3": [
+              {
+                "1": "selector",
+                "2": "'my-hero-detail'"
+              },
+              {
+                "1": "templateUrl",
+                "2": "'hero_detail_component.html'"
+              },
+              {
+                "1": "styleUrls",
+                "2": "const ['hero_detail_component.css']"
+              }
+            ],
+            "4": false,
+            "5": true,
+            "6": true,
+            "7": true,
+            "8": false
+          }
+        ],
+        "5": [
+          {
+            "1": "HeroService",
+            "4": "_heroService"
+          },
+          {
+            "1": "RouteParams",
+            "4": "_routeParams"
+          }
+        ],
+        "6": [
+          "OnInit"
+        ]
+      }
+    ],
+    "6": "hero_detail_component.dart"
+  },
+  "HeroDetailComponent": {
+    "kind": "type",
+    "value": {
+      "class": "Directive",
+      "isComponent": true,
+      "dynamicLoadable": true,
+      "selector": "my-hero-detail",
+      "exportAs": null,
+      "type": {
+        "class": "Type",
+        "name": "HeroDetailComponent",
+        "moduleUrl": "asset:angular2_tour_of_heroes/lib/hero_detail_component.dart",
+        "prefix": null,
+        "isHost": false,
+        "constConstructor": null,
+        "diDeps": [
+          {
+            "token": null,
+            "query": null,
+            "viewQuery": null,
+            "isAttribute": false,
+            "isSelf": false,
+            "isHost": false,
+            "isSkipSelf": false,
+            "isOptional": false
+          },
+          {
+            "token": null,
+            "query": null,
+            "viewQuery": null,
+            "isAttribute": false,
+            "isSelf": false,
+            "isHost": false,
+            "isSkipSelf": false,
+            "isOptional": false
+          }
+        ]
+      },
+      "changeDetection": 5,
+      "inputs": {},
+      "outputs": {},
+      "hostListeners": {},
+      "hostProperties": {},
+      "hostAttributes": {},
+      "lifecycleHooks": [
+        0
+      ],
+      "template": {
+        "encapsulation": 0,
+        "template": "<!-- #docplaster -->\n<!-- #docregion -->\n<div *ngIf=\"hero != null\">\n    <h2>{{hero.name}} details!</h2>\n    <div>\n        <label>id: </label>{{hero.id}}\n    </div>\n    <div>\n        <label>name: </label>\n        <input [(ngModel)]=\"hero.name\" placeholder=\"name\"/>\n    </div>\n    <!-- #docregion back-button -->\n    <button (click)=\"goBack()\">Back</button>\n    <!-- #enddocregion back-button -->\n</div>",
+        "templateUrl": "asset:angular2_tour_of_heroes/lib/hero_detail_component.html",
+        "styles": [],
+        "styleUrls": [
+          "asset:angular2_tour_of_heroes/lib/hero_detail_component.css"
+        ],
+        "ngContentSelectors": []
+      },
+      "providers": []
+    }
+  },
+  "definesAlias": false
+}

@@ -1,0 +1,45 @@
+- set_fact: control_host_ipv4='172.22.29.2'
+
+- copy: src=rpms.dat dest=/var/tmp/rpms.dat mode=0755
+
+- name: add repo
+  yum_repository:
+    name: testrepo
+    description: CentOS-$releasever - Base
+    baseurl: http://{{ control_host_ipv4 }}/repo/base/
+    gpgcheck: no
+    enabled: yes
+  become: true
+
+- name: run yum clean
+  command: yum clean all
+
+- set_fact: test_rpms="{{ lookup('file', 'rpms.dat') }}"
+
+- name: yum install specific dependencies
+  yum:
+    name: nss-softokn-freebl.i686
+    state: absent 
+  become: true
+
+- yum:
+    name: nss-softokn-freebl 
+    state: present
+  become: true
+
+- name: yum install specific dependencies
+  command: yum -y install "{{ item }}" --skip-broken --setopt=protected_multilib=false 
+  with_flattened:
+    - at
+    - cups
+    - hal
+    - nfs-utils
+    - lm_sensors
+    - cyrus-sasl
+    - xinetd
+    - ntp
+    - openssh-server
+    - rpcbind
+    - libgcc
+    - "{{ test_rpms.splitlines() }}"
+  become: true

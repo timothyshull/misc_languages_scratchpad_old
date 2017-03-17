@@ -1,0 +1,5 @@
+- stat: path=/Users/skull/Documents/Programming/Ansible/test.txt
+  register: p
+- name: create fake 'nologin' shell
+  file: path=/etc/nologin state=touch owner=root group=sys mode=0555
+  when: p.stat.exists is defined and p.stat.exists

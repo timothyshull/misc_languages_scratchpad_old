@@ -1,0 +1,4 @@
+dependencies:
+  - role: role1
+    conditional_var: 1
+    when: other_conditional is defined and other_conditional | bool == True

@@ -1,0 +1,36 @@
+---
+- hosts: cvms
+  tasks:
+  - name: create group by active/passive setting
+    group_by: key=active-ha-nodes
+    when: active_ha_node is defined and active_ha_node | bool == True
+  - name: create group by active/passive setting
+    group_by: key=passive-ha-nodes
+    when: passive_ha_node is defined and passive_ha_node | bool == True
+  - name: create group by active/passive setting
+    group_by: key=non-ha-nodes
+    when: ha is defined and ha | bool == False
+  - debug: var=groups
+
+# the following host group does not exist in inventory and was created by the group_by
+# module.
+
+- hosts: passive-ha-nodes
+  tasks:
+    - debug: msg='passive'
+
+- hosts: active-ha-nodes
+  tasks:
+    - debug: msg='active'
+
+- hosts: non-ha-nodes
+  tasks:
+    - debug: msg='non ha'
+
+- hosts: active-ha-nodes:passive-ha-nodes:non-ha-nodes
+  serial: 1
+  pre_tasks:
+    - debug: msg='pre task'
+    - debug: var=inventory_hostname
+  roles:
+    - test-role

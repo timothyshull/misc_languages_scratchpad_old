@@ -1,0 +1,14 @@
+  # copy with_fileglob
+  - debug: msg="outer_item={{ outer_item }}, outer_item.src={{ outer_item.src }} inner item={{ item }}"
+    with_fileglob:
+      - "{{ outer_item.src }}"
+
+  - copy: src={{ item }} dest={{ outer_item.dest }} mode={{ outer_item.mode }} owner=root group=root
+    with_fileglob:
+      - "{{ outer_item.src }}"
+    when: "{{ outer_item.mode }} is defined"
+
+  - copy: src={{ item }} dest={{ outer_item.dest }} owner=root group=root
+    with_fileglob:
+      - "{{ outer_item.src }}"
+    when: "{{ outer_item.mode }} is undefined"
